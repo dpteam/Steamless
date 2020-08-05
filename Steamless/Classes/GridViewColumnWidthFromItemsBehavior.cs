@@ -36,19 +36,23 @@ namespace Steamless.Classes
 
     public static class GridViewColumnWidthFromItemsBehavior
     {
+        [System.Obsolete]
         public static readonly DependencyProperty GridViewColumnWidthFromItemsProperty =
             DependencyProperty.RegisterAttached("Enabled", typeof(bool), typeof(GridViewColumnWidthFromItemsBehavior), new UIPropertyMetadata(false, OnGridViewColumnWidthFromItemsPropertyChanged));
 
+        [System.Obsolete]
         public static bool GetEnabled(DependencyObject obj)
         {
             return (bool)obj.GetValue(GridViewColumnWidthFromItemsProperty);
         }
 
+        [System.Obsolete]
         public static void SetEnabled(DependencyObject obj, bool value)
         {
             obj.SetValue(GridViewColumnWidthFromItemsProperty, value);
         }
 
+        [System.Obsolete]
         private static void OnGridViewColumnWidthFromItemsPropertyChanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
         {
             if (dpo is ListView lv)
@@ -60,6 +64,7 @@ namespace Steamless.Classes
             }
         }
 
+        [System.Obsolete]
         private static void OnListViewLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             var lv = sender as ListView;
