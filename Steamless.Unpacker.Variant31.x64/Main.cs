@@ -99,8 +99,21 @@ namespace Steamless.Unpacker.Variant31.x64
             {
                 // Load the file..
                 var f = new Pe64File(file);
-                if (!f.Parse() || !f.IsFile64Bit() || !f.HasSection(".bind"))
+                if (!f.Parse())
+                {
+                    this.Log("Can't parse as PE64", LogMessageType.Information);
                     return false;
+                }
+                if (!f.IsFile64Bit())
+                {
+                    this.Log("Is not 64bit", LogMessageType.Information);
+                    return false;
+                }
+                if (!f.HasSection(".bind"))
+                {
+                    this.Log("Missing bind section", LogMessageType.Information);
+                    return false;
+                }
 
                 // Obtain the bind section data..
                 var bind = f.GetSectionData(".bind");
@@ -130,8 +143,9 @@ namespace Steamless.Unpacker.Variant31.x64
                 // Check for the known 3.1 header size..
                 return headerSize == 0xF0;
             }
-            catch
+            catch (Exception e)
             {
+                this.Log(e.ToString(), LogMessageType.Warning);
                 return false;
             }
         }
