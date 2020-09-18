@@ -41,8 +41,9 @@ namespace Steamless.API.PE64
         /// <returns></returns>
         public static T GetStructure<T>(byte[] data, int offset = 0)
         {
-            var ptr = Marshal.AllocHGlobal(data.Length);
-            Marshal.Copy(data, offset, ptr, data.Length - offset);
+            var size = Marshal.SizeOf(typeof(T));
+            var ptr = Marshal.AllocHGlobal(size);
+            Marshal.Copy(data, offset, ptr, size);
             var obj = (T)Marshal.PtrToStructure(ptr, typeof(T));
             Marshal.FreeHGlobal(ptr);
 
