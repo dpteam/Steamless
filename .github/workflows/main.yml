@@ -1,0 +1,52 @@
+name: Steamless
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install MSBuild
+        uses: microsoft/setup-msbuild@v1.0.1
+      
+      - name: Compiling
+        run: msbuild Steamless.sln -p:Configuration=Release
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Steamless-Linux
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install MSBuild
+        uses: microsoft/setup-msbuild@v1.0.1
+      
+      - name: Compiling
+        run: msbuild Steamless.sln -p:Configuration=Release
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Steamless-Windows
+
+      # Unreleased test stage... Cannot find a small free or demo game for tests.
+      #- name: Test Stage - Setup SteamCMD
+      #  uses: CyberAndrii/setup-steamcmd@v1.1.0
+
+      #- name: Test Stage - Update Spacewar
+      #  run: steamcmd +login anonymous +app_update 480 validate +quit
+
+      #- name: Test Stage - Test CLI
+      #  run: mono ./Steamless/bin/x86/Debug/Steamless.CLI.exe path/to/executable.exe # PLACEHOLDER
